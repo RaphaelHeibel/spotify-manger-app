@@ -26,7 +26,7 @@ export class SpotifyService {
     if (!token) return false;
 
     try {
-      this.setAccessToken(token);
+      await this.setAccessToken(token);
       await this.getSpotifyUser();
       return !!this.user;
     } catch (error) {
@@ -50,7 +50,7 @@ export class SpotifyService {
     return authEndpoint + clientId + redirectUrl + scopes + responseType;
   }
 
-  getTokenUrlCallback() {
+  async getTokenUrlCallback() {
     if (!window.location.hash)
       return '';
 
@@ -58,8 +58,8 @@ export class SpotifyService {
     return params[0].split('=')[1];
   }
 
-  setAccessToken(token: string) {
-    this.spotifyApi.setAccessToken(token);
+  async setAccessToken(token: string) {
+    await this.spotifyApi.setAccessToken(token);
     localStorage.setItem('token', token);
   }
 }

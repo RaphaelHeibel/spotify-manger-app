@@ -1,0 +1,4 @@
+/* pega a div pai */
+:host{
+    display: flex;
+}

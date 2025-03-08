@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PlayerComponent } from './player/player.component';
 import { RouterModule } from '@angular/router';
 import { PlayerRoutes } from './player.routes';
+import { LeftPanelComponent } from '../../components/left-panel/left-panel.component';
 
 
 
@@ -11,7 +12,8 @@ import { PlayerRoutes } from './player.routes';
   imports: [
     CommonModule,
     PlayerComponent,
-    RouterModule.forChild(PlayerRoutes)
+    RouterModule.forChild(PlayerRoutes),
+    LeftPanelComponent
   ]
 })
 export class PlayerModule { }
