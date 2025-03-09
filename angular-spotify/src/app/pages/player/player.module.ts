@@ -4,7 +4,8 @@ import { PlayerComponent } from './player/player.component';
 import { RouterModule } from '@angular/router';
 import { PlayerRoutes } from './player.routes';
 import { LeftPanelComponent } from '../../components/left-panel/left-panel.component';
-
+import { MenuButtonComponent } from '../../components/menu-button/menu-button.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -12,8 +13,10 @@ import { LeftPanelComponent } from '../../components/left-panel/left-panel.compo
   imports: [
     CommonModule,
     PlayerComponent,
+    FontAwesomeModule,
+    LeftPanelComponent,
+    MenuButtonComponent,
     RouterModule.forChild(PlayerRoutes),
-    LeftPanelComponent
   ]
 })
 export class PlayerModule { }

@@ -3,7 +3,8 @@ import { SpotifyConfiguration } from '../../../../environments/environment.devel
 
 import Spotify from 'spotify-web-api-js'
 import { IUser } from '../../../interfaces/IUser';
-import { SpotifyUserToUser } from '../../../common/spotifyHelper';
+import { SpotifyPlaylistToPlaylist, SpotifyUserToUser } from '../../../common/spotifyHelper';
+import { IPlaylist } from '../../../interfaces/IPlaylist';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,7 @@ export class SpotifyService {
 
   async getSpotifyUser() {
     const userInfo = await this.spotifyApi.getMe();
-    this.user = SpotifyUserToUser(userInfo);
-    console.log(this.user);
+    this.user = await SpotifyUserToUser(userInfo);
   }
 
   getLoginUrl() {
@@ -61,5 +61,16 @@ export class SpotifyService {
   async setAccessToken(token: string) {
     await this.spotifyApi.setAccessToken(token);
     localStorage.setItem('token', token);
+  }
+
+  async getUserPlaylists(offset = 0, limit = 50): Promise<IPlaylist[]> {
+    await this.getSpotifyUser();
+    const playlists = await this.spotifyApi.getUserPlaylists(this.user.id, { offset, limit });
+    if (!playlists?.items) {
+      console.warn("Nenhuma playlist encontrada!");     
+    }
+
+    console.log(playlists);
+    return playlists.items.map(SpotifyPlaylistToPlaylist);
   }
 }
