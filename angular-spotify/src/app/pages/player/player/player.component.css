@@ -1,4 +1,10 @@
 /* pega a div pai */
 :host{
     display: flex;
+
+    .router-container{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 }

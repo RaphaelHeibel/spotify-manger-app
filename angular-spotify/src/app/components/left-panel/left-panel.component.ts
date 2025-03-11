@@ -5,10 +5,12 @@ import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg
 import { IPlaylist } from '../../interfaces/IPlaylist';
 import { SpotifyService } from '../../pages/login/services/spotify.service';
 import { CommonModule } from '@angular/common';
+import { UserFooterComponent } from "../user-footer/user-footer.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-left-panel',
-  imports: [MenuButtonComponent, FontAwesomeModule, CommonModule],
+  imports: [MenuButtonComponent, FontAwesomeModule, CommonModule, UserFooterComponent],
   templateUrl: './left-panel.component.html',
   styleUrl: './left-panel.component.scss'
 })
@@ -26,7 +28,9 @@ export class LeftPanelComponent implements OnInit {
   artistIcon = faGuitar
   playlistIcon = faMusic
 
-  constructor(private spotifyService: SpotifyService) { }
+  constructor(
+    private router: Router,
+    private spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
     this.getPlaylists();
@@ -34,6 +38,7 @@ export class LeftPanelComponent implements OnInit {
 
   onMenuItemClick(button: string) {
     this.selectedMenuItem = button;
+    this.router.navigateByUrl(`player/${button}`);
   }
 
   async getPlaylists() {

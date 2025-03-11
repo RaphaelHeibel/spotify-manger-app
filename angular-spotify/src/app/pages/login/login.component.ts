@@ -22,9 +22,9 @@ export class LoginComponent implements OnInit {
   async verifyTokenUrlCallback() {
     const token = await this.spotifyService.getTokenUrlCallback();
 
-    if (!!token) {
+    if (token) {
       await this.spotifyService.setAccessToken(token);
-      this.router.navigate(['/player']);
+      this.router.navigate(['/player/home']);
     }
   }
 

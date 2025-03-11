@@ -1,24 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import 'variables.scss';
-
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import "variables.scss";
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    background-color: $cor-fundo;
+  margin: 0;
+  padding: 0;
+  background-color: $cor-fundo;
 }
 
 * {
-    font-family: 'Montserrat', sans-serif;
-    box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
 }
 
 .flex {
-    display: flex;
+  display: flex;
 
-    &-center{
-        justify-content: center;
-        align-items: center;
+  &-center {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.title {
+  color: $cor-primaria;
+  display: block;
+  font-weight: 700;
+
+  &-bg {
+    @extend .title;
+    font-size: 2.2rem;
+
+    &-top {
+      @extend .title-bg;
+      color: $preto-transparente-70;
     }
+  }
+
+  &-md {
+    @extend .title;
+    font-size: 1.4rem;
+  }
+}
+
+.mt {
+  @for $i from 1 to 10 {
+    &-#{$i} {
+      margin-top: $i * 1rem;
+    }
+  }
+}
+
+.p-20 {
+  padding: 20px;
+
+  &.image{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    z-index: 0;
+  }
+}
+
+.card {
+  box-shadow: 0px 0px 15px $preto-transparente-03;
+  background-color: $branco;
+  border-radius: 10px;
 }

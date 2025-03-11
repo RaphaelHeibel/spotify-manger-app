@@ -3,8 +3,10 @@ import { SpotifyConfiguration } from '../../../../environments/environment.devel
 
 import Spotify from 'spotify-web-api-js'
 import { IUser } from '../../../interfaces/IUser';
-import { SpotifyPlaylistToPlaylist, SpotifyUserToUser } from '../../../common/spotifyHelper';
+import { SpotifyArtistToArtist, SpotifyPlaylistToPlaylist, SpotifyUserToUser } from '../../../common/spotifyHelper';
 import { IPlaylist } from '../../../interfaces/IPlaylist';
+import { Router } from '@angular/router';
+import { IArtist } from '../../../interfaces/IArtist';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class SpotifyService {
   spotifyApi: Spotify.SpotifyWebApiJs;
   user: IUser;
 
-  constructor() {
+  constructor(private router: Router) {
     this.spotifyApi = new Spotify();
   }
 
@@ -27,7 +29,7 @@ export class SpotifyService {
     if (!token) return false;
 
     try {
-      await this.setAccessToken(token);
+      this.setAccessToken(token);
       await this.getSpotifyUser();
       return !!this.user;
     } catch (error) {
@@ -37,7 +39,7 @@ export class SpotifyService {
 
   async getSpotifyUser() {
     const userInfo = await this.spotifyApi.getMe();
-    this.user = await SpotifyUserToUser(userInfo);
+    this.user = SpotifyUserToUser(userInfo);
   }
 
   getLoginUrl() {
@@ -67,10 +69,19 @@ export class SpotifyService {
     await this.getSpotifyUser();
     const playlists = await this.spotifyApi.getUserPlaylists(this.user.id, { offset, limit });
     if (!playlists?.items) {
-      console.warn("Nenhuma playlist encontrada!");     
+      console.warn("Nenhuma playlist encontrada!");
     }
 
-    console.log(playlists);
     return playlists.items.map(SpotifyPlaylistToPlaylist);
+  }
+
+  async getTopArtists(limit = 10): Promise<IArtist[]> {
+    const artists = await this.spotifyApi.getMyTopArtists({ limit });
+    return artists.items.map(SpotifyArtistToArtist);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }
