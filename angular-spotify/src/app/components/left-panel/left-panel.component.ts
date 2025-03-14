@@ -3,7 +3,7 @@ import { MenuButtonComponent } from "../menu-button/menu-button.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons'
 import { IPlaylist } from '../../interfaces/IPlaylist';
-import { SpotifyService } from '../../pages/login/services/spotify.service';
+import { SpotifyService } from '../../pages/services/spotify.service';
 import { CommonModule } from '@angular/common';
 import { UserFooterComponent } from "../user-footer/user-footer.component";
 import { Router } from '@angular/router';

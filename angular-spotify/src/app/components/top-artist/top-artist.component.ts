@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { IArtist } from '../../interfaces/IArtist';
 import { newArtist } from '../../common/factories';
-import { SpotifyService } from '../../pages/login/services/spotify.service';
+import { SpotifyService } from '../../pages/services/spotify.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-top-artist',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './top-artist.component.html',
   styleUrl: './top-artist.component.scss'
 })

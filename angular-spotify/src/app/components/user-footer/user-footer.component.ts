@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { IUser } from '../../interfaces/IUser';
-import { SpotifyService } from '../../pages/login/services/spotify.service';
+import { SpotifyService } from '../../pages/services/spotify.service';
 
 @Component({
   selector: 'app-user-footer',

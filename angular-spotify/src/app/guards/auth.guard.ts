@@ -1,4 +1,4 @@
-import { SpotifyService } from './../pages/login/services/spotify.service';
+import { SpotifyService } from '../pages/services/spotify.service';
 import { Injectable } from '@angular/core';
 import { CanLoad, Route, Router, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { SpotifyConfiguration } from '../../../../environments/environment.development';
+import { SpotifyConfiguration } from '../../../environments/environment.development';
 
 import Spotify from 'spotify-web-api-js'
-import { IUser } from '../../../interfaces/IUser';
-import { SpotifyArtistToArtist, SpotifyPlaylistToPlaylist, SpotifyTrackToMusic, SpotifyUserToUser } from '../../../common/spotifyHelper';
-import { IPlaylist } from '../../../interfaces/IPlaylist';
+import { IUser } from '../../interfaces/IUser';
+import { SpotifyArtistToArtist, SpotifyPlaylistToPlaylist, SpotifyTrackToMusic, SpotifyUserToUser } from '../../common/spotifyHelper';
+import { IPlaylist } from '../../interfaces/IPlaylist';
 import { Router } from '@angular/router';
-import { IArtist } from '../../../interfaces/IArtist';
-import { IMusic } from '../../../interfaces/IMusic';
+import { IArtist } from '../../interfaces/IArtist';
+import { IMusic } from '../../interfaces/IMusic';
 
 @Injectable({
   providedIn: 'root'
@@ -86,8 +86,29 @@ export class SpotifyService {
     return musics.items.map(music => SpotifyTrackToMusic(music.track));
   }
 
-  async playMusic(musicId: string){
+  async playMusic(musicId: string) {
     await this.spotifyApi.queue(musicId);
+    await this.spotifyApi.skipToNext();
+  }
+
+  async getCurrentMusic(): Promise<IMusic> {
+    const spotifyMusic = await this.spotifyApi.getMyCurrentPlayingTrack();
+    return SpotifyTrackToMusic(spotifyMusic.item);
+  }
+
+  async previousSong() {
+    await this.spotifyApi.skipToPrevious();
+  }
+  
+  async pauseSong() {
+    await this.spotifyApi.pause();
+  }
+
+  async resumeSong() {
+    await this.spotifyApi.play();
+  }
+
+  async nextSong() {
     await this.spotifyApi.skipToNext();
   }
 
