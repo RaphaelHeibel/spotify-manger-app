@@ -35,7 +35,7 @@
         *ngFor="let playlist of playlists"
         [description]="playlist.name"
         [selected]="selectedMenuItem === playlist.id"
-        (click)="onMenuItemClick(playlist.id)"
+        (click)="openPlaylist(playlist.id)"
       >
         <fa-icon [icon]="playlistIcon"></fa-icon>
       </app-menu-button>

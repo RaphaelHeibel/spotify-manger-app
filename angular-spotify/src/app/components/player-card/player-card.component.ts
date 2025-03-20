@@ -13,10 +13,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.scss'
 })
-export class PlayerCardComponent implements OnInit,OnDestroy{
+export class PlayerCardComponent implements OnInit, OnDestroy {
 
   music: IMusic = newMusic()
   subs: Subscription[] = [];
+  isPlaying: boolean = false;
+  currentIcon = faPlay;
 
   //Icons
   previousIcon = faStepBackward;
@@ -24,19 +26,20 @@ export class PlayerCardComponent implements OnInit,OnDestroy{
   playIcon = faPlay;
   pauseIcon = faPause;
 
-  constructor(readonly playerService: PlayerService) {}
+  constructor(readonly playerService: PlayerService) { }
 
 
 
   ngOnInit(): void {
     this.getCurrentMusic();
+    this.getPlayingState();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
   }
 
-  getCurrentMusic(){
+  getCurrentMusic() {
     const sub = this.playerService.currentSong.subscribe(music => {
       this.music = music;
     })
@@ -44,19 +47,37 @@ export class PlayerCardComponent implements OnInit,OnDestroy{
     this.subs.push(sub);
   }
 
-  previousSong(){
+  previousSong() {
     this.playerService.previousSong();
   }
 
-  nextSong(){
+  nextSong() {
     this.playerService.nextSong();
   }
 
-  pauseSong(){
+  async getPlayingState() {
+    await this.playerService.isPlaying().then(playing => {
+      this.isPlaying = playing;
+      this.currentIcon = this.isPlaying ? this.pauseIcon : this.playIcon;
+    });
+
+  }
+
+  async playPauseSong() {
+    await this.getPlayingState();
+
+    if (this.isPlaying) {
+      this.pauseSong();
+    } else {
+      this.resumeSong();
+    }
+  }
+
+  pauseSong() {
     this.playerService.pauseSong();
   }
 
-  resumeSong(){
+  resumeSong() {
     this.playerService.resumeSong();
   }
 

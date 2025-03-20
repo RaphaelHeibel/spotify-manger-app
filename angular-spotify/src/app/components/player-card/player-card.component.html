@@ -8,7 +8,7 @@
     <span>{{ music.title }}</span>
     <div class="buttons">
       <fa-icon [icon]="previousIcon" (click)="previousSong()"></fa-icon>
-      <fa-icon [icon]="playIcon" (click)="pauseSong()"></fa-icon>
+      <fa-icon [icon]="currentIcon" class="play-pause-btn" (click)="playPauseSong()"></fa-icon>
       <fa-icon [icon]="nextIcon" (click)="nextSong()"></fa-icon>
     </div>
   </div>

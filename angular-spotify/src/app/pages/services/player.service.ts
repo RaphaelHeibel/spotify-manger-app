@@ -47,4 +47,9 @@ export class PlayerService {
         await this.spotifyService.resumeSong();
      }
 
+     async isPlaying() {
+        const isPlaying = await this.spotifyService.isPlaying();
+        return isPlaying.is_playing;
+     }
+
 }

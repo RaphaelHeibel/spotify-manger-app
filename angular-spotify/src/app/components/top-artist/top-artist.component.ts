@@ -23,9 +23,8 @@ export class TopArtistComponent implements OnInit {
   async getTopArtist() {
     const artists = await this.spotifyService.getTopArtists();
 
-    if (artists) {
-      this.topArtist = artists.pop();
+    if (artists && artists.length > 0) {
+      this.topArtist = artists[0];
     }
   }
-
 }

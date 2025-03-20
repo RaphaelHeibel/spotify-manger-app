@@ -38,11 +38,16 @@ export class LeftPanelComponent implements OnInit {
 
   onMenuItemClick(button: string) {
     this.selectedMenuItem = button;
-    this.router.navigateByUrl(`player/${button}`);
+    this.router.navigateByUrl(`player/${button.toLowerCase()}`);
   }
 
   async getPlaylists() {
     this.playlists = await this.spotifyService.getUserPlaylists();
+  }
+
+  openPlaylist(playlistid:string){
+    this.selectedMenuItem = playlistid;
+    this.router.navigateByUrl(`player/list/playlist/${playlistid}`);
   }
 
 

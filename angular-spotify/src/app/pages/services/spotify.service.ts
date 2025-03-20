@@ -3,7 +3,7 @@ import { SpotifyConfiguration } from '../../../environments/environment.developm
 
 import Spotify from 'spotify-web-api-js'
 import { IUser } from '../../interfaces/IUser';
-import { SpotifyArtistToArtist, SpotifyPlaylistToPlaylist, SpotifyTrackToMusic, SpotifyUserToUser } from '../../common/spotifyHelper';
+import { SpotifyArtistToArtist, SpotifyPlaylistToPlaylist, SpotifySinglePlaylistToPlaylist, SpotifyTrackToMusic, SpotifyUserToUser } from '../../common/spotifyHelper';
 import { IPlaylist } from '../../interfaces/IPlaylist';
 import { Router } from '@angular/router';
 import { IArtist } from '../../interfaces/IArtist';
@@ -13,6 +13,7 @@ import { IMusic } from '../../interfaces/IMusic';
   providedIn: 'root'
 })
 export class SpotifyService {
+
 
   spotifyApi: Spotify.SpotifyWebApiJs;
   user: IUser;
@@ -76,6 +77,22 @@ export class SpotifyService {
     return playlists.items.map(SpotifyPlaylistToPlaylist);
   }
 
+  async getMusicListFromPlaylist(playlistId: string, offset = 0, limit = 50) {
+    const playlistSpotify = await this.spotifyApi.getPlaylist(playlistId, { offset, limit });
+
+    if (!playlistSpotify)
+      return null;
+
+    const playlist = SpotifySinglePlaylistToPlaylist(playlistSpotify);
+    const musicList = await this.spotifyApi.getPlaylistTracks(playlistId, { offset, limit });
+
+    playlist.musics = musicList.items.map(music => SpotifyTrackToMusic(music.track as SpotifyApi.TrackObjectFull));
+
+    return playlist;
+  }
+
+
+
   async getTopArtists(limit = 10): Promise<IArtist[]> {
     const artists = await this.spotifyApi.getMyTopArtists({ limit });
     return artists.items.map(SpotifyArtistToArtist);
@@ -99,7 +116,7 @@ export class SpotifyService {
   async previousSong() {
     await this.spotifyApi.skipToPrevious();
   }
-  
+
   async pauseSong() {
     await this.spotifyApi.pause();
   }
@@ -110,6 +127,10 @@ export class SpotifyService {
 
   async nextSong() {
     await this.spotifyApi.skipToNext();
+  }
+
+  async isPlaying() {
+    return await this.spotifyApi.getMyCurrentPlaybackState();
   }
 
   logout() {

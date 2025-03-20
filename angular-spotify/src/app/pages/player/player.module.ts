@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
 import { TopArtistsComponent } from '../../components/top-artists/top-artists.component';
 import { ArtistItemImageComponent } from '../../components/artist-item-image/artist-item-image.component';
 import { PlayerCardComponent } from '../../components/player-card/player-card.component';
+import { MusicListComponent } from '../music-list/music-list.component';
+import { BannerComponent } from '../../components/banner/banner.component';
 
 
 @NgModule({
@@ -24,9 +26,11 @@ import { PlayerCardComponent } from '../../components/player-card/player-card.co
     CommonModule,
     HomeComponent,
     PlayerComponent,
+    BannerComponent,
     FontAwesomeModule,
     LeftPanelComponent,
     TopArtistComponent,
+    MusicListComponent,
     PlayerCardComponent,
     TopArtistsComponent,
     UserFooterComponent,
